@@ -40,7 +40,7 @@ public class Activation extends javax.swing.JFrame {
         
         version.setText(bc.version());
         
-        activationField.setText(Config.readFile("activation.txt"));
+        activationField.setText(BaseClass.readFile("activation.txt"));
        
         
     }
@@ -181,7 +181,7 @@ public class Activation extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Please enter activation code","ERROR",JOptionPane.WARNING_MESSAGE);
         }
         else{
-            Config.writeFile("activation.txt",activationCode);
+            BaseClass.writeFile("activation.txt",activationCode);
             JOptionPane.showMessageDialog(this, "Activation code saved successfully", "SUCCESS", JOptionPane.PLAIN_MESSAGE);
         }
         

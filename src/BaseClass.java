@@ -1,17 +1,9 @@
 
 import com.formdev.flatlaf.json.ParseException;
-import static com.sun.org.apache.xalan.internal.utils.SecuritySupport.getResourceAsStream;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -31,24 +23,22 @@ public class BaseClass {
     
     public static String version() throws FileNotFoundException, IOException{
         pro = new Properties();
-//        FileInputStream fip = new FileInputStream("objects.properties");
-//        pro.load(fip);
-         InputStream in = getResourceAsStream("objects.properties");
-         pro.load(in);
-        
+        FileInputStream fip = new FileInputStream("objects.properties");
+        pro.load(fip);
+       
         return pro.getProperty("VERSION");
         
     }
     
     public static String title() throws FileNotFoundException, IOException{
         pro = new Properties();
-        InputStream in = getResourceAsStream("objects.properties");
-        pro.load(in);
+        FileInputStream fip = new FileInputStream("objects.properties");
+        pro.load(fip);
         
         return pro.getProperty("TITLE");
     }
     
-    public static String[] settings(){
+    public static String[] settings() throws FileNotFoundException{
          String settings = readFile("settings.txt");
          String[] settings_value;
          settings_value = settings.split(",,,");
@@ -69,12 +59,14 @@ public class BaseClass {
         return pat.matcher(email).matches(); 
     } 
     
-    public static String readFile(String filePath){
-     InputStream in = getResourceAsStream(filePath);
-     Scanner scan=null;
-     scan=new Scanner(in); //config file is not there
-        
-     String fileString=scan.nextLine();
+    public static String readFile(String filePath) throws FileNotFoundException{
+      pro = new Properties();
+        FileInputStream fip = new FileInputStream(filePath);
+       
+        Scanner scan=null;
+        scan=new Scanner(fip); //config file is not there
+
+        String fileString=scan.nextLine();
     
             
         return fileString;
@@ -82,16 +74,25 @@ public class BaseClass {
     }
     
     public static void writeFile(String filePath,String newConfig){
-        try { 
-            FileWriter myWriter = new FileWriter(filePath);
+       
+            FileWriter myWriter = null;
+        try {
+            myWriter = new FileWriter(filePath);
             myWriter.write(newConfig);
             myWriter.close();
         } catch (IOException ex) {
-            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BaseClass.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                myWriter.close();
+            } catch (IOException ex) {
+                Logger.getLogger(BaseClass.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
        
+       
     }
-    public static  List<String> unwantedSubjects(){
+    public static  List<String> unwantedSubjects() throws FileNotFoundException{
         String filter=readFile("sare_hizo.txt");
         String [] filterArray=filter.split(",");
      
