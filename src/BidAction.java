@@ -50,25 +50,30 @@ public class BidAction {
             System.out.println(e);
         }
         
-        try{
-        orderId=driver.findElement(By.xpath("//div[@class=\"order-id grey data-hj-whitelist type_10\"]")).getText();
-        }catch(Exception e){}
+        try {
+            orderId = driver.findElement(By.xpath("//div[@class=\"order-id grey data-hj-whitelist type_10\"]")).getText();
+            console.append("[" + orderId + "]" + " successfully bid" + "\n");
+            console.append("----------------------------------------------------------------" + "\n");
+        } catch (Exception e){}
         
         //place message
        try{
            WebElement chatField = halfMinWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("id_body")));
            chatField.sendKeys(message);
            
-           console.append("["+orderId+"]"+" successfully bid"+ "\n");
-           console.append("----------------------------------------------------------------"+ "\n");
+           
        }catch(Exception e){
            System.out.println(e);
-           
+           console.append("["+orderId+"]"+" chat[0]"+ "\n");
+           console.append("----------------------------------------------------------------"+ "\n");
        }
         
-
-        Actions actions = new Actions(driver);
-        actions.sendKeys(Keys.ENTER).perform();
+        try {
+            Actions actions = new Actions(driver);
+            actions.sendKeys(Keys.ENTER).perform();
+        } catch (Exception e) {
+        }
+        
         
                 
         Thread.sleep(1000);
