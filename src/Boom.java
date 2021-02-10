@@ -1,6 +1,7 @@
 
 //import static clinkEs.options;
 import java.io.FileNotFoundException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -88,6 +89,8 @@ if(unwanteds.contains(WordUtils.capitalizeFully(subject))){
         
         ChromeOptions options = new ChromeOptions();
         System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+        options.setExperimentalOption("useAutomationExtension", false);
+    options.setExperimentalOption("excludeSwitches",Collections.singletonList("enable-automation"));   
 //        options.addArguments("--headless");
         bidDriver = new ChromeDriver(options);
         

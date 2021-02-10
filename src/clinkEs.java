@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -26,8 +27,9 @@ public class clinkEs {
     
     public static void main(String[] args) throws InterruptedException, IOException, FontFormatException {
         System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
-        
-        options.addArguments("--headless");
+        options.setExperimentalOption("useAutomationExtension", false);
+    options.setExperimentalOption("excludeSwitches",Collections.singletonList("enable-automation"));   
+//        options.addArguments("--headless");
         //fetch the refresh rate
         new Home().setVisible(true);
         

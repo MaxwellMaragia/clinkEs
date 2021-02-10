@@ -19,7 +19,7 @@ public class BidAction {
         WebDriverWait minuteWait = new WebDriverWait(driver, 60);
         WebDriverWait halfMinWait=new WebDriverWait(driver,30);
         WebDriverWait wait = new WebDriverWait(driver, 200);
-        WebDriverWait sec5 = new WebDriverWait(driver, 5);
+        WebDriverWait wait5 = new WebDriverWait(driver, 5);
         
         WebElement amountInput;
         String recAmount;
@@ -34,18 +34,46 @@ public class BidAction {
         }
 
         try {
-            minuteWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("id_read_timeout_container"))).isDisplayed();
-            recAmount = sec5.until(ExpectedConditions.visibilityOfElementLocated(By.id("rec_amount"))).getText();
-            amountInput=sec5.until(ExpectedConditions.visibilityOfElementLocated(By.id("id_bid")));
-            amountInput.sendKeys(recAmount);
+            halfMinWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("id_read_timeout_container"))).isDisplayed();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
+        try {
+//            recAmount = sec5.until(ExpectedConditions.visibilityOfElementLocated(By.id("rec_amount"))).getText();
+            amountInput=wait5.until(ExpectedConditions.visibilityOfElementLocated(By.id("id_bid")));
+            amountInput.sendKeys("0");
         } catch (Exception e) {
             System.out.println(e);
         }
 
+        //click apply order to display mimimal amount error
+        try{
+            apply = wait.until(ExpectedConditions.elementToBeClickable(By.id("apply_order")));
+            apply.submit();
+            
+        }catch(Exception e ){
+            System.out.println(e);
+        }
+        
+        //put minimal amount
+        try{
+        String minimalAmountString=wait5.until(ExpectedConditions.visibilityOfElementLocated(By.id("id_bid-error"))).getText();
+        String [] mimimalAmountArray=minimalAmountString.split(" ");
+        String mimimalAmount=mimimalAmountArray[4].replace("$", "");
+        System.out.println("minimal MOUNT"+mimimalAmountArray[4].replace("$", ""));
+        amountInput=wait5.until(ExpectedConditions.visibilityOfElementLocated(By.id("id_bid")));
+        amountInput.sendKeys(mimimalAmount);
+        }catch(Exception e){
+        System.out.println(e);
+        }
+        
+        
         //click apply order
         try{
             apply = wait.until(ExpectedConditions.elementToBeClickable(By.id("apply_order")));
             apply.submit();
+            
         }catch(Exception e ){
             System.out.println(e);
         }

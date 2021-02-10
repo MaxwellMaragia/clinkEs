@@ -141,7 +141,7 @@ public class Settings extends javax.swing.JFrame {
         });
 
         jLabel1.setForeground(new java.awt.Color(0, 204, 255));
-        jLabel1.setText("Click to filter subjects");
+        jLabel1.setText(".");
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel1MouseClicked(evt);
