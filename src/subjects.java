@@ -6,8 +6,11 @@ import static java.lang.Math.E;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JCheckBox;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -32,11 +35,7 @@ public class subjects extends javax.swing.JFrame {
         
  
     public subjects() throws IOException {
-        try {
-            UIManager.setLookAndFeel( new FlatDarkLaf() );
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Bid.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+      
         initComponents();
        
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
