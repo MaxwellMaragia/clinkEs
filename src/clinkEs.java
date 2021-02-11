@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -26,8 +27,9 @@ public class clinkEs {
     
     public static void main(String[] args) throws InterruptedException, IOException, FontFormatException {
         System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
-        
-        options.addArguments("--headless");
+        options.setExperimentalOption("useAutomationExtension", false);
+    options.setExperimentalOption("excludeSwitches",Collections.singletonList("enable-automation"));   
+//        options.addArguments("--headless");
         //fetch the refresh rate
         new Home().setVisible(true);
         
@@ -74,7 +76,15 @@ class bot {
          driver.get("https://essayshark.com/writer/orders/");
          Thread.sleep(3000);
         }
-        boolean login_success = loginWait.until(ExpectedConditions.urlMatches("https://essayshark.com/writer/orders/"));
+        
+        boolean login_success=false;
+        
+        try{
+            login_success = loginWait.until(ExpectedConditions.urlMatches("https://essayshark.com/writer/orders/"));
+        }catch(Exception e){
+        login_success=false;
+        }
+        
         
         if(login_success){
             
@@ -119,7 +129,9 @@ class bot {
                 Logger.getLogger(bot.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-          }
+          }else{
+            JOptionPane.showMessageDialog(null, "Error launching,restart the bot and try again","ERROR",JOptionPane.ERROR_MESSAGE);
+        }
             
         }
         

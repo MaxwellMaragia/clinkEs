@@ -9,6 +9,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -244,7 +245,12 @@ public class Login extends javax.swing.JFrame {
         } else if (!BaseClass.isValid(email)) {
             JOptionPane.showMessageDialog(this, "Invalid email", "ERROR", JOptionPane.ERROR_MESSAGE);
         } else {
-            String activationCode = BaseClass.readFile("activation.txt");
+            String activationCode="";
+            try {
+                activationCode = BaseClass.readFile("activation.txt");
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
             if (activationCode.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Activation code missing, please update settings", "ERROR", JOptionPane.ERROR_MESSAGE);
             } else {
