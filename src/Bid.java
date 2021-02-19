@@ -3,6 +3,7 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Toolkit;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Set;
 import java.util.logging.Level;
@@ -11,53 +12,48 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Maxwell Maragia
  */
 public class Bid extends javax.swing.JFrame {
+
     BaseClass bc = new BaseClass();
     static WebDriver driver;
     static Set<Cookie> cookies;
     public static String consoleText;
-   
-   
+
     /**
      * Creates new form Bid
      */
     public Bid() throws IOException {
-        
+
         try {
-            UIManager.setLookAndFeel( new FlatDarkLaf() );
+            UIManager.setLookAndFeel(new FlatDarkLaf());
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Bid.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         initComponents();
-       
+
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle(bc.title());
-        
+
         version.setText(bc.version());
         console.append("Happy bid day\n");
         console.append("Login successful\n");
         console.append("Click start to launch bot\n");
-        
-        
-    }
-    
-    
 
-    
-   
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -212,15 +208,25 @@ public class Bid extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void startActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startActionPerformed
-       
+
         try {
             start.setEnabled(false);
             stop.setEnabled(true);
+            for (int i = 0; i <= Integer.parseInt(BaseClass.settings()[3]); i++) {
+                bot.bidDriver = new ChromeDriver(clinkEs.options);
+                bot.bidDriver.get("https://essayshark.com/writer/profile/");
+                for (Cookie cookie : cookies) {
+                    bot.bidDriver.manage().addCookie(cookie);
+                }
+
+                bot.idleWindows.add(bot.bidDriver);
+                bot.allWindows.add(bot.bidDriver);
+
+            }
             console.append("Bot started......\n");
             bot.discardOrders();
-            new Boom(driver,cookies,console).start();
-            
-            
+            new Boom(driver, cookies, console).start();
+
 //        try {
 //            bot.discardOrders();
 //            bot.placeBid(Integer.parseInt(BaseClass.settings()[0]),BaseClass.unwantedSubjects());
@@ -229,52 +235,58 @@ public class Bid extends javax.swing.JFrame {
 //        }
         } catch (InterruptedException ex) {
             Logger.getLogger(Bid.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Bid.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_startActionPerformed
 
     private void startMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_startMouseClicked
-       
+
     }//GEN-LAST:event_startMouseClicked
 
     private void stopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopActionPerformed
         start.setEnabled(true);
         stop.setEnabled(false);
         Boom.exit();
+        for (WebDriver driver : bot.allWindows) {
+            driver.close();
+        }
+        bot.idleWindows.clear();
+        bot.allWindows.clear();
         console.append("Bot stopped\n");
         //BaseClass.stopBid(driver);
     }//GEN-LAST:event_stopActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        int dialogButton = JOptionPane.YES_NO_OPTION;   
-        int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to stop bid?","Warning",dialogButton);
-            if(dialogResult == JOptionPane.YES_OPTION){
-              // Saving code here
-              try {
-                    bot.driver.close();
-                    Boom.exit();
-                    dispose();
-                    Home home = new Home();
-                    home.setVisible(true);
-                        } catch (IOException ex) {
-                            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (FontFormatException ex) {
-                            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Would You Like to stop bid?", "Warning", dialogButton);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            // Saving code here
+            try {
+                bot.driver.close();
+                Boom.exit();
+                dispose();
+                Home home = new Home();
+                home.setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (FontFormatException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        
-        
-        int dialogButton = JOptionPane.YES_NO_OPTION;   
-        int dialogResult = JOptionPane.showConfirmDialog (null, "Would You Like to stop bid?","Warning",dialogButton);
-            if(dialogResult == JOptionPane.YES_OPTION){
-              // Saving code here
-             
-              Boom.exit();
-              bot.driver.close();
-              System.exit(0);
-            }
+
+        int dialogButton = JOptionPane.YES_NO_OPTION;
+        int dialogResult = JOptionPane.showConfirmDialog(null, "Would You Like to stop bid?", "Warning", dialogButton);
+        if (dialogResult == JOptionPane.YES_OPTION) {
+            // Saving code here
+
+            Boom.exit();
+            bot.driver.close();
+            System.exit(0);
+        }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
@@ -284,7 +296,6 @@ public class Bid extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea console;

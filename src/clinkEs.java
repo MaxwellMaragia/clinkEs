@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -20,6 +21,8 @@ import javax.swing.JOptionPane;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.SessionId;
 
 public class clinkEs {
 
@@ -45,8 +48,8 @@ class bot {
     public static String paro;
     public static Set<Cookie> cookies = null;
     public static Login login;
-    public static String[] idleWindows;
-    public static String[] activeWindows;
+    public static List<WebDriver> idleWindows = new ArrayList<WebDriver>();
+    public static List<WebDriver> allWindows = new ArrayList<WebDriver>();
 
     public static void login(String email, String password, String activationCode) throws InterruptedException {
         
@@ -116,6 +119,7 @@ class bot {
                 System.out.print("Status = "+status);
                 
                 if(status==1){
+                    
                     login.dispose();
                     System.out.print("Login done");
                     new Bid().setVisible(true);

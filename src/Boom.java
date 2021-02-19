@@ -1,8 +1,10 @@
 
 //import static clinkEs.options;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,6 +16,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -28,9 +31,11 @@ import org.openqa.selenium.chrome.ChromeOptions;
 public class Boom extends Thread{
     
     private WebDriver driver;
-    static WebDriver bidDriver;
+    //static WebDriver bidDriver;
     private JTextArea console;
     private static Boolean exit;
+    private RemoteWebDriver bidDriver;
+    
       
     private Set<Cookie> cookies;    
     
@@ -38,6 +43,7 @@ public class Boom extends Thread{
         this.driver = driver;
         this.cookies = cookies;
         this.console = console;
+   
         exit = false; 
     }
     
@@ -90,15 +96,17 @@ if(unwanteds.contains(WordUtils.capitalizeFully(subject))){
         ChromeOptions options = new ChromeOptions();
         System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
         options.setExperimentalOption("useAutomationExtension", false);
-    options.setExperimentalOption("excludeSwitches",Collections.singletonList("enable-automation"));   
+        options.setExperimentalOption("excludeSwitches",Collections.singletonList("enable-automation"));   
 //        options.addArguments("--headless");
-        bidDriver = new ChromeDriver(options);
-        
-        
-        bidDriver.get("https://essayshark.com/writer/orders/");
-        for (Cookie cookie : cookies) {
-            bidDriver.manage().addCookie(cookie);
+        if(!bot.idleWindows.isEmpty()){
+            
+            Random randomizer = new Random();
+            bidDriver = (RemoteWebDriver) bot.idleWindows.get(randomizer.nextInt(bot.idleWindows.size()));
+            bot.idleWindows.remove(bidDriver);
+             
         }
+        
+      
         new BidThread("Bid",orders.get(j).getAttribute("href"), bidDriver, console).start();
         try{
         

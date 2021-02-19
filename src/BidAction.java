@@ -11,7 +11,7 @@ import javax.swing.JTextArea;
 
 public class BidAction {
 
-    public WebDriver driver;
+    //public WebDriver driver;
 
     public void bid(String message, String bidURL, WebDriver driver,JTextArea console) throws InterruptedException {
         //recyclable exp wait
@@ -106,7 +106,8 @@ public class BidAction {
                 
         Thread.sleep(1000);
 
-        driver.close();
+        bot.idleWindows.add(driver);
+        System.out.println("Number of idle="+bot.idleWindows.size());
         Boom.availableThreads=Boom.availableThreads+1;
 
     }
