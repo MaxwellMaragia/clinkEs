@@ -73,9 +73,11 @@ public class Boom extends Thread {
                     }
                     //////////////////////
                     WebElement odaDiscard = oda.findElement(By.xpath(".//following-sibling::td[@class='orderselect center']/a"));
+                    
                     WebElement odaId = oda.findElement(By.xpath(".//a"));
                     String[] subjectArray = oda.findElement(By.xpath("//following-sibling::td[@class='discipline']")).getText().split(":");
                     String subject;
+                    System.out.println("FULL SUBJECT NI...."+oda.findElement(By.xpath("//following-sibling::td[@class='discipline']")).getText());
                     try {
                         subject = subjectArray[0].trim();
                     } catch (ArrayIndexOutOfBoundsException e) {

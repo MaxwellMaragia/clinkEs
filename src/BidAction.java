@@ -16,15 +16,13 @@ public class BidAction {
     public void bid(String message, String bidURL, WebDriver driver,JTextArea console) throws InterruptedException {
         //recyclable exp wait
         driver.get(bidURL);
-        WebDriverWait minuteWait = new WebDriverWait(driver, 60);
         WebDriverWait halfMinWait=new WebDriverWait(driver,30);
         WebDriverWait wait = new WebDriverWait(driver, 200);
         WebDriverWait wait5 = new WebDriverWait(driver, 5);
+        WebDriverWait wait10 = new WebDriverWait(driver, 10);
         
         WebElement amountInput;
-        String recAmount;
         String orderId="";
-        
         WebElement apply;
 
         //download files
@@ -34,7 +32,7 @@ public class BidAction {
         }
 
         try {
-            wait5.until(ExpectedConditions.visibilityOfElementLocated(By.id("id_read_timeout_container"))).isDisplayed();
+            wait10.until(ExpectedConditions.visibilityOfElementLocated(By.id("id_read_timeout_container"))).isDisplayed();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -84,6 +82,9 @@ public class BidAction {
             console.append("----------------------------------------------------------------" + "\n");
         } catch (Exception e){}
         
+        bot.idleWindows.add(driver);
+        Boom.availableThreads=Boom.availableThreads+1;
+        
         //place message
        try{
            WebElement chatField = halfMinWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("id_body")));
@@ -102,8 +103,7 @@ public class BidAction {
         } catch (Exception e) {
         }
         
-        bot.idleWindows.add(driver);
-        Boom.availableThreads=Boom.availableThreads+1;
+        
 
     }
 }
