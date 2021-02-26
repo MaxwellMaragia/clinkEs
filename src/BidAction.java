@@ -34,7 +34,7 @@ public class BidAction {
         }
 
         try {
-            halfMinWait.until(ExpectedConditions.visibilityOfElementLocated(By.id("id_read_timeout_container"))).isDisplayed();
+            wait5.until(ExpectedConditions.visibilityOfElementLocated(By.id("id_read_timeout_container"))).isDisplayed();
         } catch (Exception e) {
             System.out.println(e);
         }
