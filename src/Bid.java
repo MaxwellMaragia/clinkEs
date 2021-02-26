@@ -212,7 +212,7 @@ public class Bid extends javax.swing.JFrame {
         try {
             start.setEnabled(false);
             stop.setEnabled(true);
-            for (int i = 0; i <= Integer.parseInt(BaseClass.settings()[3]); i++) {
+            for (int i = 0; i < Integer.parseInt(BaseClass.settings()[3]); i++) {
                 bot.bidDriver = new ChromeDriver(clinkEs.options);
                 bot.bidDriver.get("https://essayshark.com/writer/profile/");
                 for (Cookie cookie : cookies) {

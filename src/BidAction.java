@@ -102,12 +102,7 @@ public class BidAction {
         } catch (Exception e) {
         }
         
-        
-                
-        Thread.sleep(1000);
-
         bot.idleWindows.add(driver);
-        System.out.println("Number of idle="+bot.idleWindows.size());
         Boom.availableThreads=Boom.availableThreads+1;
 
     }
