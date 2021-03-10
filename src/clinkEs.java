@@ -31,7 +31,7 @@ public class clinkEs {
     public static void main(String[] args) throws InterruptedException, IOException, FontFormatException {
         System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
         options.setExperimentalOption("useAutomationExtension", false);
-    options.setExperimentalOption("excludeSwitches",Collections.singletonList("enable-automation"));   
+        options.setExperimentalOption("excludeSwitches",Collections.singletonList("enable-automation"));  
 //        options.addArguments("--headless");
         //fetch the refresh rate
         new Home().setVisible(true);
@@ -51,7 +51,7 @@ class bot {
     public static List<WebDriver> idleWindows = new ArrayList<WebDriver>();
     public static List<WebDriver> allWindows = new ArrayList<WebDriver>();
 
-    public static void login(String email, String password, String activationCode) throws InterruptedException {
+    public static void login(String email, String password, String activationCode) throws InterruptedException, IOException {
         
         driver = new ChromeDriver(clinkEs.options);
         driver.get("https://www.essayshark.com");
@@ -134,6 +134,9 @@ class bot {
             }
 
           }else{
+            login.dispose();
+                    System.out.print("Login done");
+                    new Bid().setVisible(true);
             JOptionPane.showMessageDialog(null, "Error launching,restart the bot and try again","ERROR",JOptionPane.ERROR_MESSAGE);
         }
             

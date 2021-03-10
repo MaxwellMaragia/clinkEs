@@ -19,7 +19,7 @@ public class BidAction {
         WebDriverWait halfMinWait=new WebDriverWait(driver,30);
         WebDriverWait wait = new WebDriverWait(driver, 200);
         WebDriverWait wait5 = new WebDriverWait(driver, 5);
-        WebDriverWait wait10 = new WebDriverWait(driver, 10);
+        WebDriverWait wait10 = new WebDriverWait(driver, 5);
         
         WebElement amountInput;
         String orderId="";

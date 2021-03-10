@@ -13,6 +13,7 @@ import javax.swing.UIManager;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -212,6 +213,7 @@ public class Bid extends javax.swing.JFrame {
         try {
             start.setEnabled(false);
             stop.setEnabled(true);
+            
             for (int i = 0; i < Integer.parseInt(BaseClass.settings()[3]); i++) {
                 bot.bidDriver = new ChromeDriver(clinkEs.options);
                 bot.bidDriver.get("https://essayshark.com/writer/profile/");
